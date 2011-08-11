@@ -23,7 +23,6 @@ endfunction"}}}
 let s:unite_source = { 
       \ "name": 'function',
       \ "hooks": {},
-      \ "description": "function",
       \ }
 
 function! s:unite_source.gather_candidates(args, context)"{{{
@@ -32,7 +31,6 @@ function! s:unite_source.gather_candidates(args, context)"{{{
     call add(candidates, {
           \ "word": f.name,
           \ "abbr": f.name,
-          \ "source": "function",
           \ "kind": "jump_list",
           \ "action__path": fnamemodify(f.path, ":p"),
           \ "action__pattern" : substitute(f.name, '\v\<SNR\>\d+_(.*)', '\1', ''),
