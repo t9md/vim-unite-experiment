@@ -11,7 +11,6 @@ endfunction"}}}
 let s:unite_source = { 
       \ "name": 'scriptnames',
       \ "hooks": {},
-      \ "description": "scriptnames",
       \ }
 
 function! s:unite_source.gather_candidates(args, context)"{{{
