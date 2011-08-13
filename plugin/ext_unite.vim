@@ -19,5 +19,19 @@ endfunction"}}}
 
 nnoremap <silent> <Plug>(ext_unite_narrowing_word)  :<C-u>call <SID>narrowing_word()<CR>
 
+function! s:scroll_prevwin(key, amount)
+  let context = unite#get_context()
+  let height = winheight(a:context.winnr)
+
+  let movement = a:amount == "half"
+        \ ? repeat(a:key, height/2)
+        \ : repeat(a:key, height)
+  return "\<C-w>p" . movement . "\<C-w>p"
+endfunction
+
+nnoremap <expr> <Plug>(ext_unite_scroll_prevwin_half_forward) <SID>scroll_prevwin("\<C-e>","half")
+nnoremap <expr> <Plug>(ext_unite_scroll_prevwin_half_backward) <SID>scroll_prevwin("\<C-y>","half")
+
+
 let &cpo = s:old_cpo
 " vim: foldmethod=marker
