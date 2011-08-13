@@ -12,4 +12,9 @@ Personal setting for unite.vim
       nmap <buffer> e   <Plug>(ext_unite_narrowing_word)
       nmap <buffer> f   <Plug>(ext_unite_scroll_previous_win_half_forward)
       nmap <buffer> b   <Plug>(ext_unite_scroll_previous_win_half_backward)
+
+      " for persit_open action
+      nmap <buffer> J    <Plug>(ext_unite_loop_cursor_down_w_persis_open)
+      nmap <buffer> K    <Plug>(ext_unite_loop_cursor_up_w_persis_open)
+      nmap <buffer> <F9> <Plug>(ext_unite_toggle_auto_persist_open)
     endfunction
