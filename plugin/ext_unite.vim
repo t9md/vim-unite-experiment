@@ -49,9 +49,12 @@ nnoremap <silent><expr> <Plug>(ext_unite_persist_open) unite#do_action('persist_
 nmap <Plug>(ext_unite_loop_cursor_down_w_persis_open) <Plug>(unite_loop_cursor_down)<Plug>(ext_unite_persist_open)
 nmap <Plug>(ext_unite_loop_cursor_up_w_persis_open) <Plug>(unite_loop_cursor_up)<Plug>(ext_unite_persist_open)
 
+" Subject: project_cd アクションにに対応するキーマップの定義
+"==================================================================
+nnoremap <silent><expr> <Plug>(ext_unite_project_cd) unite#do_action('project_cd')
+
 " Subject: <Plug>(unite_toggle_auto_preview) の persist_open 版 
 "==================================================================
-nnoremap <silent><expr> <Plug>(ext_unite_persist_open) unite#do_action('persist_open')
 function! s:toggle_auto_persist_open()"{{{
  if !exists("b:ext_unite_auto_persist_open") || !b:ext_unite_auto_persist_open
    let b:ext_unite_auto_persist_open = 1
