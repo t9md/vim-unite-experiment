@@ -4,14 +4,18 @@ Personal setting for unite.vim
 
 ## .vimrc の設定
 
-    command! Variables   :Unite -buffer-name=variable var/buffer var/window var/tabpage var/global var/script var/vim
+    command! Variables   :Unite variable
     command! ScriptNames :Unite scriptnames
+    command! RTP         :Unite rtp
+    command! Function    :Unite function
 
     autocmd FileType unite call s:filetype_unite_hook()
     function! s:filetype_unite_hook()
       nmap <buffer> e   <Plug>(ext_unite_narrowing_word)
       nmap <buffer> f   <Plug>(ext_unite_scroll_previous_win_half_forward)
       nmap <buffer> b   <Plug>(ext_unite_scroll_previous_win_half_backward)
+
+      nmap <buffer> C <Plug>(ext_unite_project_cd)
 
       " for persit_open action
       nmap <buffer> J    <Plug>(ext_unite_loop_cursor_down_w_persis_open)
