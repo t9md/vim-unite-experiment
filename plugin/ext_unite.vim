@@ -22,7 +22,8 @@ function! s:narrowing_word()"{{{
   call unite#mappings#narrowing(l:candidate.word)
 endfunction"}}}
 
-nnoremap <silent> <Plug>(ext_unite_narrowing_word)  :<C-u>call <SID>narrowing_word()<CR>
+" inoremap <silent> <Plug>(ext_unite_narrowing_word)  <C-o>:<C-u>call <SID>narrowing_word()<CR>
+nnoremap <silent> <Plug>(ext_unite_narrowing_word)       :<C-u>call <SID>narrowing_word()<CR>
 
 " Subject: unite を起動した window を unite バッファからスクロールする。
 " Purpose: 
