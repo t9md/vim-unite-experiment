@@ -14,13 +14,13 @@ set cpo&vim
 " converter_relative_word, converter_relative_abbr 使用時。
 " e での絞り込みは action__path ではなく word でやりたい。
 "==================================================================
-function! s:narrowing_word()"{{{
+function! s:narrowing_word() "{{{
   if line('.') <= unite#get_current_unite().prompt_linenr
     return
   endif
   let l:candidate = unite#get_current_candidate()
   call unite#mappings#narrowing(l:candidate.word)
-endfunction"}}}
+endfunction "}}}
 
 " inoremap <silent> <Plug>(ext_unite_narrowing_word)  <C-o>:<C-u>call <SID>narrowing_word()<CR>
 nnoremap <silent> <Plug>(ext_unite_narrowing_word)       :<C-u>call <SID>narrowing_word()<CR>
@@ -30,7 +30,7 @@ nnoremap <silent> <Plug>(ext_unite_narrowing_word)       :<C-u>call <SID>narrowi
 " 前提: 私は preview window は使用せず、persist_open アクションを多用している。
 " persist_open は 元々いた window に開くので、そこを unite からスクロールしたい。
 "==================================================================
-function! s:scroll_previous_window(key, amount)"{{{
+function! s:scroll_previous_window(key, amount) "{{{
   let winnr = unite#get_current_unite().winnr
   let height = winheight(winnr)
 
@@ -38,7 +38,7 @@ function! s:scroll_previous_window(key, amount)"{{{
         \ ? repeat(a:key, height/2)
         \ : repeat(a:key, height)
   return "\<C-w>p" . movement . "\<C-w>p"
-endfunction"}}}
+endfunction "}}}
 
 nnoremap <silent><expr> <Plug>(ext_unite_scroll_previous_win_half_forward)   <SID>scroll_previous_window("\<C-e>", "half")
 nnoremap <silent><expr> <Plug>(ext_unite_scroll_previous_win_half_backward)  <SID>scroll_previous_window("\<C-y>", "half")
@@ -56,7 +56,7 @@ nnoremap <silent><expr> <Plug>(ext_unite_project_cd) unite#do_action('project_cd
 
 " Subject: <Plug>(unite_toggle_auto_preview) の persist_open 版 
 "==================================================================
-function! s:toggle_auto_persist_open()"{{{
+function! s:toggle_auto_persist_open() "{{{
  if !exists("b:ext_unite_auto_persist_open") || !b:ext_unite_auto_persist_open
    let b:ext_unite_auto_persist_open = 1
 
@@ -67,7 +67,7 @@ function! s:toggle_auto_persist_open()"{{{
    nmap <buffer>j <Plug>(unite_loop_cursor_down)
    nmap <buffer>k <Plug>(unite_loop_cursor_up)
  endif
-endfunction"}}}
+endfunction "}}}
 nnoremap <silent><expr> <Plug>(ext_unite_toggle_auto_persist_open) <SID>toggle_auto_persist_open()
 
 let &cpo = s:old_cpo
