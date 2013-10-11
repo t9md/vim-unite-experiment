@@ -1,7 +1,7 @@
 " GUARD: {{{
 "============================================================
 if exists('g:loaded_ext_unite')
-  finish
+  " finish
 endif
 
 let g:loaded_ext_unite = 1
@@ -23,7 +23,8 @@ function! s:narrowing_word() "{{{
 endfunction "}}}
 
 " inoremap <silent> <Plug>(ext_unite_narrowing_word)  <C-o>:<C-u>call <SID>narrowing_word()<CR>
-nnoremap <silent> <Plug>(ext_unite_narrowing_word)       :<C-u>call <SID>narrowing_word()<CR>
+nnoremap <silent> <Plug>(ext_unite_narrowing_word) 
+      \ :<C-u>call <SID>narrowing_word()<CR>
 
 " Subject: unite を起動した window を unite バッファからスクロールする。
 " Purpose: 
@@ -32,27 +33,28 @@ nnoremap <silent> <Plug>(ext_unite_narrowing_word)       :<C-u>call <SID>narrowi
 "==================================================================
 function! s:scroll_previous_window(key, amount) "{{{
   let winnr = unite#get_current_unite().winnr
-  let height = winheight(winnr)
-
-  let movement = a:amount == "half"
-        \ ? repeat(a:key, height/2)
-        \ : repeat(a:key, height)
-  return "\<C-w>p" . movement . "\<C-w>p"
+  return "\<C-w>p" . winheight(winnr)/2 . a:key . "\<C-w>p"
 endfunction "}}}
 
-nnoremap <silent><expr> <Plug>(ext_unite_scroll_previous_win_half_forward)   <SID>scroll_previous_window("\<C-e>", "half")
-nnoremap <silent><expr> <Plug>(ext_unite_scroll_previous_win_half_backward)  <SID>scroll_previous_window("\<C-y>", "half")
+nnoremap <silent><expr> <Plug>(ext_unite_scroll_previous_win_half_forward)
+      \ <SID>scroll_previous_window("\<C-e>", "half")
+nnoremap <silent><expr> <Plug>(ext_unite_scroll_previous_win_half_backward)
+      \ <SID>scroll_previous_window("\<C-y>", "half")
 
 " Subject: persist_open アクションにに対応するキーマップの定義
 "==================================================================
-nnoremap <silent><expr> <Plug>(ext_unite_persist_open) unite#do_action('persist_open')
+nnoremap <silent><expr> <Plug>(ext_unite_persist_open)
+      \ unite#do_action('persist_open')
 
-nmap <Plug>(ext_unite_loop_cursor_down_w_persis_open) <Plug>(unite_loop_cursor_down)<Plug>(ext_unite_persist_open)
-nmap <Plug>(ext_unite_loop_cursor_up_w_persis_open) <Plug>(unite_loop_cursor_up)<Plug>(ext_unite_persist_open)
+nmap <Plug>(ext_unite_loop_cursor_down_w_persis_open)
+      \ <Plug>(unite_loop_cursor_down)<Plug>(ext_unite_persist_open)
+nmap <Plug>(ext_unite_loop_cursor_up_w_persis_open)
+      \ <Plug>(unite_loop_cursor_up)<Plug>(ext_unite_persist_open)
 
 " Subject: project_cd アクションにに対応するキーマップの定義
 "==================================================================
-nnoremap <silent><expr> <Plug>(ext_unite_project_cd) unite#do_action('project_cd')
+nnoremap <silent><expr> <Plug>(ext_unite_project_cd)
+      \ unite#do_action('project_cd')
 
 " Subject: <Plug>(unite_toggle_auto_preview) の persist_open 版 
 "==================================================================
@@ -69,6 +71,15 @@ function! s:toggle_auto_persist_open() "{{{
  endif
 endfunction "}}}
 nnoremap <silent><expr> <Plug>(ext_unite_toggle_auto_persist_open) <SID>toggle_auto_persist_open()
+
+" Subject: <Plug>(ext_unite_toggle_auto_quit)
+"==================================================================
+function! s:toggle_auto_quit()
+  let context = unite#get_context()
+  let context.no_quit = !context.no_quit
+endfunction
+nnoremap <silent> <Plug>(ext_unite_toggle_auto_quit)
+      \ :<C-u>call <SID>toggle_auto_quit()<CR>
 
 let &cpo = s:old_cpo
 " vim: foldmethod=marker
