@@ -9,7 +9,7 @@ let s:old_cpo = &cpo
 set cpo&vim
 " }}}
 
-" Subject: 常に word で narrowing するキーマップ
+" Subject: [FIXME: NO LONGER WORK] 常に word で narrowing するキーマップ
 " Purpose:
 " converter_relative_word, converter_relative_abbr 使用時。
 " e での絞り込みは action__path ではなく word でやりたい。
