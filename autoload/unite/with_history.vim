@@ -36,9 +36,12 @@ function! s:u.resume(direction) "{{{
     return
   endif
   let context = unite#get_context()
+  let vertical_opt = context.vertical
+        \ ? "-vertical"
+        \ : "-horizontal"
   set lazyredraw
   call unite#view#_close(context.buffer_name)
-  let cmd =  "UniteResume " . buffer_name
+  let cmd =  "UniteResume " .vertical_opt . " " . buffer_name
   exe cmd
   set nolazyredraw
   redraw
