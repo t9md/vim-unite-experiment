@@ -10,6 +10,8 @@ function! s:u.launch(...) "{{{
   let buffer_name = self.buffer_name()
   let cmd = "Unite " . join([self.source_name] + a:000, ":")
         \ . " -buffer-name=" . buffer_name
+        \ . " -profile-name=" . self.profile_name
+        \ . " -start-insert"
   execute cmd
   call add(self.history, buffer_name)
   if len(self.history) > self.history_size
@@ -40,7 +42,8 @@ function! s:u.resume(direction) "{{{
         \ ? "-vertical"
         \ : "-horizontal"
   set lazyredraw
-  call unite#view#_close(context.buffer_name)
+  silent execute "UniteClose " . context.buffer_name
+  " call unite#view#_close(context.buffer_name)
   let cmd =  "UniteResume " .vertical_opt . " " . buffer_name
   exe cmd
   set nolazyredraw
@@ -68,9 +71,10 @@ function! s:u.next() "{{{
 endfunction "}}}
 
 " create instance
-function! s:u.new(source_name)
+function! s:u.new(source_name, profile_name)
   let o = deepcopy(self)
   let o.source_name = a:source_name
+  let o.profile_name = a:profile_name
   return o
 endfunction
 
@@ -79,8 +83,8 @@ function! unite#with_history#new(...)
 endfunction
 
 let g:ext_unite_history = {}
-function! unite#with_history#setup(source_name, command_name)
-  let g:ext_unite_history[a:source_name] = unite#with_history#new(a:source_name)
+function! unite#with_history#setup(source_name, command_name, profile_name)
+  let g:ext_unite_history[a:source_name] = unite#with_history#new(a:source_name, a:profile_name)
   let base = 'g:ext_unite_history["' . a:source_name .'"]'
   execute "command! -nargs=* -complete=dir " . a:command_name . " :call " .base.".launch(<f-args>)"
   call s:set_mapping(a:source_name, base)
@@ -92,3 +96,8 @@ function! s:set_mapping(source_name, base)
   exe  "inoremap <silent> <Plug>(ext-unite-with_history-" . a:source_name . "-p) <C-o>:call " .a:base. ".resume('previous')<CR>"
   exe  "inoremap <silent> <Plug>(ext-unite-with_history-" . a:source_name . "-n) <C-o>:call " .a:base. ".resume('next')<CR>"
 endfunction
+
+" finish
+" call unite#with_history#setup("file_rec", "FileRec", "files")
+" call unite#with_history#setup("file_rec/async", "FileRecAsync", "files")
+" call unite#with_history#setup("grep", "Grep", "grep")
